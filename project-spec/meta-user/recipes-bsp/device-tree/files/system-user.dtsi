@@ -1,0 +1,38 @@
+/include/ "system-conf.dtsi"
+/ {
+    chosen {
+        bootargs = "earlycon clk_ignore_unused   uio_pdrv_genirq.of_id=generic-uio";
+        stdout-path = "serial0:9600n8";
+    };
+};
+
+&axi_ethernetlite_0 {
+  local-mac-address = [00 0a 35 00 22 01];
+  phy-handle = <&phy0>;
+  xlnx,has-mdio = <0x1>;
+  mdio {
+    #address-cells = <1>;
+    #size-cells = <0>;
+    phy0: phy@1 {
+      device_type = "ethernet-phy";
+      reg = <1>;
+    };
+  };
+};
+
+&microblaze_0_axi_intc{
+    compatible = "generic-uio";
+    interrupt-parent = <&intc>;
+    reg = <0x41200000 0x10000>;
+};
+
+&axi_gpio_0 {
+    compatible = "generic-uio";
+    reg = <0x40000000 0x10000>;
+};
+
+&axi_gpio_1 {
+    compatible = "generic-uio";
+    reg = <0x40010000 0x10000>;
+};
+
